@@ -3,9 +3,9 @@
 
 using namespace dss;
 
-void BStree::insert(int value)
+bool BStree::insert(int value)
 {
-    insert(_root, value);
+    return insert(_root, value, -1);
 }
 
 bool BStree::search(int value)
@@ -16,6 +16,11 @@ bool BStree::search(int value)
 void BStree::remove(int value)
 {
     _root = remove(_root, value);
+}
+
+unsigned int BStree::size()
+{
+    return _count;
 }
 
 void BStree::inorder(std::ostream& stream)
@@ -39,17 +44,20 @@ void BStree::postorder(std::ostream& stream)
     stream << " ]" << std::endl;
 }
 
-void BStree::insert(nodeptr& root, int value)
+bool BStree::insert(nodeptr& root, int value, int height)
 {
     if (!root) {
-        root = nodeptr(new Node(value));
+        root = nodeptr(new Node(value, height + 1));
+        _count++;
+        return true;
     }
     else if (value > root->data) {
-        insert(root->right, value);
+        return insert(root->right, value, height + 1);
     }
-    else {
-        insert(root->left, value);
+    else if (value < root->data) {
+        return insert(root->left, value, height + 1);
     }
+    return false;
 }
 
 bool BStree::search(nodeptr& root, int value)
@@ -83,12 +91,15 @@ nodeptr BStree::remove(nodeptr& root, int value)
     else {
         nodeptr temp = std::move(root);
         if (temp->left == temp->right) {
+            _count--;
             return nodeptr();
         }
         if (!temp->left) {
+            _count--;
             return std::move(temp->right);
         }
         if (!temp->right) {
+            _count--;
             return std::move(temp->left);
         }
 

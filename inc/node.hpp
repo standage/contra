@@ -6,13 +6,23 @@
 namespace dss
 {
 
-struct Node
+class Node
 {
-    std::unique_ptr<Node> left;
-    std::unique_ptr<Node> right;
-    int data;
+    public:
+        std::unique_ptr<Node> left;
+        std::unique_ptr<Node> right;
+        int data;
+        int height() {
+            return _height;
+        }
 
-    Node(int value) : left(nullptr), right(nullptr), data(value) {}
+        Node(int value)
+            : left(nullptr), right(nullptr), data(value), _height(-1) {}
+        Node(int value, int ht)
+            : left(nullptr), right(nullptr), data(value), _height(ht) {}
+
+    protected:
+        int _height;
 };
 typedef std::unique_ptr<Node> nodeptr;
 

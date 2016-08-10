@@ -11,13 +11,12 @@ namespace dss
 class BStree
 {
     public:
+        BStree() : _root(nullptr), _count(0) {}
 
-
-        BStree() : _root(nullptr) {}
-
-        void insert(int value);
+        bool insert(int value);
         bool search(int value);
         void remove(int value);
+        unsigned int size();
 
         void inorder(std::ostream& stream = std::cout);
         void preorder(std::ostream& stream = std::cout);
@@ -25,8 +24,9 @@ class BStree
 
     protected:
         nodeptr _root;
+        unsigned int _count;
 
-        void insert(nodeptr& root, int value);
+        bool insert(nodeptr& root, int value, int height);
         bool search(nodeptr& root, int value);
         nodeptr remove(nodeptr& root, int value);
         nodeptr minimum(nodeptr& root);

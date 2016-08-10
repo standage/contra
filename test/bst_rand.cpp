@@ -1,6 +1,8 @@
+#include <assert.h>
 #include <iostream>
 #include <ostream>
 #include <stdlib.h>
+#include <vector>
 #include "bstree.hpp"
 
 using namespace dss;
@@ -13,6 +15,7 @@ int main(int argc, const char **argv)
     }
 
     unsigned int n = atoi(argv[1]);
+    assert(n >= 10);
     unsigned int seed;
     if (argc > 2) {
         seed = atoi(argv[2]);
@@ -24,10 +27,27 @@ int main(int argc, const char **argv)
     srand(seed);
 
     BStree tree;
+    assert(tree.size() == 0);
+    int r;
+    std::vector<int> v;
     for(unsigned int i = 0; i < n; i++) {
-        int r = rand() % 3100000000;
-        tree.insert(r);
+        r = rand() % 3100000000;
+        if (!tree.search(r)){
+            tree.insert(r);
+            if (v.size() < 10) {
+                v.push_back(r);
+            }
+        }
     }
+    assert(tree.size() == n);
+    tree.remove(r);
+    assert(tree.size() == n - 1);
+    while (!v.empty()) {
+        int i = v.back();
+        v.pop_back();
+        tree.remove(i);
+    }
+    assert(tree.size() == n - 11);
     tree.inorder();
 
     return 0;
