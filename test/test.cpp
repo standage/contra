@@ -14,8 +14,8 @@ int main()
     tree.insert(30);
 
     tree.inorder();
-    tree.remove(20);
-    tree.inorder();
+    //tree.remove(20);
+    //tree.inorder();
 
     return 0;
 }
