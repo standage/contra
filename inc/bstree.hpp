@@ -1,27 +1,19 @@
-#ifndef DSS_AVL_TREE
-#define DSS_AVL_TREE
+#ifndef DSS_BS_TREE
+#define DSS_BS_TREE
 
 #include <iostream>
-#include <memory>
 #include <ostream>
+#include "node.hpp"
 
-namespace dss_avl_tree
+namespace dss
 {
 
-class AVLtree
+class BStree
 {
     public:
-        struct AVLnode
-        {
-            std::unique_ptr<AVLnode> left;
-            std::unique_ptr<AVLnode> right;
-            int data;
 
-            AVLnode(int value) : left(nullptr), right(nullptr), data(value) {}
-        };
-        typedef std::unique_ptr<AVLnode> nodeptr;
 
-        AVLtree() : _root(nullptr) {}
+        BStree() : _root(nullptr) {}
 
         void insert(int value);
         bool search(int value);
@@ -43,8 +35,8 @@ class AVLtree
         void preorder(nodeptr& root, std::ostream& stream);
         void postorder(nodeptr& root, std::ostream& stream);
 
-}; // end class AVLtree
+}; // class BStree
 
-} // end namespace dss_avl_tree
+} // namespace dss
 
-#endif // define DSS_AVL_tree
+#endif // define DSS_BS_tree

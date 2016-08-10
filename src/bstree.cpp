@@ -1,48 +1,48 @@
-#include "avltree.hpp"
+#include "bstree.hpp"
+#include "node.hpp"
 
-using namespace dss_avl_tree;
-typedef dss_avl_tree::AVLtree::nodeptr nodeptr;
+using namespace dss;
 
-void AVLtree::insert(int value)
+void BStree::insert(int value)
 {
     insert(_root, value);
 }
 
-bool AVLtree::search(int value)
+bool BStree::search(int value)
 {
     return search(_root, value);
 }
 
-void AVLtree::remove(int value)
+void BStree::remove(int value)
 {
     _root = remove(_root, value);
 }
 
-void AVLtree::inorder(std::ostream& stream)
+void BStree::inorder(std::ostream& stream)
 {
     stream << "[";
     inorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-void AVLtree::preorder(std::ostream& stream)
+void BStree::preorder(std::ostream& stream)
 {
     stream << "[";
     preorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-void AVLtree::postorder(std::ostream& stream)
+void BStree::postorder(std::ostream& stream)
 {
     stream << "[";
     postorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-void AVLtree::insert(nodeptr& root, int value)
+void BStree::insert(nodeptr& root, int value)
 {
     if (!root) {
-        root = nodeptr(new AVLnode(value));
+        root = nodeptr(new Node(value));
     }
     else if (value > root->data) {
         insert(root->right, value);
@@ -52,7 +52,7 @@ void AVLtree::insert(nodeptr& root, int value)
     }
 }
 
-bool AVLtree::search(nodeptr& root, int value)
+bool BStree::search(nodeptr& root, int value)
 {
     if (!root) {
         return false;
@@ -69,7 +69,7 @@ bool AVLtree::search(nodeptr& root, int value)
 
 }
 
-nodeptr AVLtree::remove(nodeptr& root, int value)
+nodeptr BStree::remove(nodeptr& root, int value)
 {
     if (!root) {
         return std::move(root);
@@ -100,7 +100,7 @@ nodeptr AVLtree::remove(nodeptr& root, int value)
     return std::move(root);
 }
 
-nodeptr AVLtree::minimum(nodeptr& root)
+nodeptr BStree::minimum(nodeptr& root)
 {
     if (!root || !root->left) {
         return std::move(root);
@@ -108,7 +108,7 @@ nodeptr AVLtree::minimum(nodeptr& root)
     return minimum(root->left);
 }
 
-void AVLtree::inorder(nodeptr& root, std::ostream& stream)
+void BStree::inorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         inorder(root->left, stream);
@@ -117,7 +117,7 @@ void AVLtree::inorder(nodeptr& root, std::ostream& stream)
     }
 }
 
-void AVLtree::preorder(nodeptr& root, std::ostream& stream)
+void BStree::preorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         stream << " " << root->data;
@@ -126,7 +126,7 @@ void AVLtree::preorder(nodeptr& root, std::ostream& stream)
     }
 }
 
-void AVLtree::postorder(nodeptr& root, std::ostream& stream)
+void BStree::postorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         postorder(root->left, stream);

@@ -1,10 +1,10 @@
-#include "avltree.hpp"
+#include "bstree.hpp"
 
-using namespace dss_avl_tree;
+using namespace dss;
 
 int main()
 {
-    AVLtree tree;
+    BStree tree;
     tree.insert(10);
     tree.insert(5);
     tree.insert(20);

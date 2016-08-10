@@ -5,11 +5,11 @@ all: bin/test
 clean:
 	rm -f obj/*.o bin/test
 
-obj/avltree.o: src/avltree.cpp inc/avltree.hpp
+obj/bstree.o: src/bstree.cpp inc/bstree.hpp
 	g++ $(CFLAGS) -c -o $@ $<
 
 obj/test.o: src/test.cpp
 	g++ $(CFLAGS) -c -o $@ $<
 
-bin/test: obj/test.o obj/avltree.o
+bin/test: obj/test.o obj/bstree.o
 	g++ $(CFLAGS) -o $@ $^
