@@ -2,3 +2,5 @@ obj/*.o
 bin/test
 bin/bst_rand_test
 bin/bst_traversal
+build/
+aux/contra.cpp
