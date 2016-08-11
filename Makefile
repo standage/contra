@@ -1,6 +1,6 @@
 CFLAGS=-Wall -Iinc/ --std=c++11
 
-TESTBINS=bin/test bin/bst_rand_test
+TESTBINS=bin/test bin/bst_rand_test bin/bst_traversal
 
 all: $(TESTBINS)
 
@@ -17,4 +17,7 @@ bin/test: test/test.cpp obj/bstree.o
 	g++ $(CFLAGS) -o $@ $^
 
 bin/bst_rand_test: test/bst_rand.cpp obj/bstree.o
+	g++ $(CFLAGS) -o $@ $^
+
+bin/bst_traversal: test/bst_traversal.cpp obj/bstree.o
 	g++ $(CFLAGS) -o $@ $^
