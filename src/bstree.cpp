@@ -1,53 +1,53 @@
 #include "bstree.hpp"
 #include "node.hpp"
 
-using namespace dss;
+using namespace contra_cpp;
 
-bool BStree::insert(int value)
+bool bstree::insert(int value)
 {
     return insert(_root, value, -1);
 }
 
-bool BStree::search(int value)
+bool bstree::search(int value)
 {
     return search(_root, value);
 }
 
-void BStree::remove(int value)
+void bstree::remove(int value)
 {
     _root = remove(_root, value);
 }
 
-unsigned int BStree::size()
+unsigned int bstree::size()
 {
     return _count;
 }
 
-void BStree::inorder(std::ostream& stream)
+void bstree::inorder(std::ostream& stream)
 {
     stream << "[";
     inorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-void BStree::preorder(std::ostream& stream)
+void bstree::preorder(std::ostream& stream)
 {
     stream << "[";
     preorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-void BStree::postorder(std::ostream& stream)
+void bstree::postorder(std::ostream& stream)
 {
     stream << "[";
     postorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-bool BStree::insert(nodeptr& root, int value, int height)
+bool bstree::insert(nodeptr& root, int value, int height)
 {
     if (!root) {
-        root = nodeptr(new Node(value, height + 1));
+        root = nodeptr(new node(value, height + 1));
         _count++;
         return true;
     }
@@ -60,7 +60,7 @@ bool BStree::insert(nodeptr& root, int value, int height)
     return false;
 }
 
-bool BStree::search(nodeptr& root, int value)
+bool bstree::search(nodeptr& root, int value)
 {
     if (!root) {
         return false;
@@ -77,7 +77,7 @@ bool BStree::search(nodeptr& root, int value)
 
 }
 
-nodeptr BStree::remove(nodeptr& root, int value)
+nodeptr bstree::remove(nodeptr& root, int value)
 {
     if (!root) {
         return std::move(root);
@@ -111,7 +111,7 @@ nodeptr BStree::remove(nodeptr& root, int value)
     return std::move(root);
 }
 
-nodeptr BStree::minimum(nodeptr& root)
+nodeptr bstree::minimum(nodeptr& root)
 {
     if (!root || !root->left) {
         return std::move(root);
@@ -119,7 +119,7 @@ nodeptr BStree::minimum(nodeptr& root)
     return minimum(root->left);
 }
 
-void BStree::inorder(nodeptr& root, std::ostream& stream)
+void bstree::inorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         inorder(root->left, stream);
@@ -128,7 +128,7 @@ void BStree::inorder(nodeptr& root, std::ostream& stream)
     }
 }
 
-void BStree::preorder(nodeptr& root, std::ostream& stream)
+void bstree::preorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         stream << " " << root->data;
@@ -137,7 +137,7 @@ void BStree::preorder(nodeptr& root, std::ostream& stream)
     }
 }
 
-void BStree::postorder(nodeptr& root, std::ostream& stream)
+void bstree::postorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         postorder(root->left, stream);

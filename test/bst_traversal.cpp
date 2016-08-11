@@ -5,13 +5,13 @@
 #include <vector>
 #include "bstree.hpp"
 
-using namespace dss;
+using namespace contra_cpp;
 typedef std::vector<int> vint;
 typedef std::vector<std::string> vstring;
 
 void test(vint& values, vstring& trav1, int to_remove, vstring& trav2)
 {
-    BStree tree;
+    bstree tree;
     for (auto i : values) {
         tree.insert(i);
     }

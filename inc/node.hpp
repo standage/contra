@@ -1,31 +1,31 @@
-#ifndef DSS_NODE
-#define DSS_NODE
+#ifndef CONTRA_NODE
+#define CONTRA_NODE
 
 #include <memory>
 
-namespace dss
+namespace contra_cpp
 {
 
-class Node
+class node
 {
     public:
-        std::unique_ptr<Node> left;
-        std::unique_ptr<Node> right;
+        std::unique_ptr<node> left;
+        std::unique_ptr<node> right;
         int data;
         int height() {
             return _height;
         }
 
-        Node(int value)
+        node(int value)
             : left(nullptr), right(nullptr), data(value), _height(-1) {}
-        Node(int value, int ht)
+        node(int value, int ht)
             : left(nullptr), right(nullptr), data(value), _height(ht) {}
 
     protected:
         int _height;
 };
-typedef std::unique_ptr<Node> nodeptr;
+typedef std::unique_ptr<node> nodeptr;
 
-} // namespace dss
+} // namespace contra_cpp
 
-#endif // define DSS_NODE
+#endif // define CONTRA_NODE

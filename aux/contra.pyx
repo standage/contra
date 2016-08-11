@@ -3,9 +3,9 @@
 
 from libcpp cimport bool
 
-cdef extern from 'bstree.hpp' namespace 'dss':
-    cdef cppclass BStree:
-        BStree() except +
+cdef extern from 'bstree.hpp' namespace 'contra_cpp':
+    cdef cppclass bstree:
+        bstree() except +
         bool insert(int value)
         bool search(int value)
         void remove(int value)
@@ -14,8 +14,8 @@ cdef extern from 'bstree.hpp' namespace 'dss':
         void postorder()
         unsigned int size()
 
-cdef class bstree:
-    cdef BStree tree
+cdef class BStree:
+    cdef bstree tree
     def insert(self, int value):
         return self.tree.insert(value)
     def search(self, int value):

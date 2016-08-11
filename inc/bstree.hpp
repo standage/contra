@@ -1,17 +1,17 @@
-#ifndef DSS_BS_TREE
-#define DSS_BS_TREE
+#ifndef CONTRA_BS_TREE
+#define CONTRA_BS_TREE
 
 #include <iostream>
 #include <ostream>
 #include "node.hpp"
 
-namespace dss
+namespace contra_cpp
 {
 
-class BStree
+class bstree
 {
     public:
-        BStree() : _root(nullptr), _count(0) {}
+        bstree() : _root(nullptr), _count(0) {}
 
         bool insert(int value);
         bool search(int value);
@@ -35,8 +35,8 @@ class BStree
         void preorder(nodeptr& root, std::ostream& stream);
         void postorder(nodeptr& root, std::ostream& stream);
 
-}; // class BStree
+}; // class bstree
 
-} // namespace dss
+} // namespace contra_cpp
 
-#endif // define DSS_BS_tree
+#endif // define CONTRA_BS_TREE

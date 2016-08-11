@@ -5,7 +5,7 @@
 #include <vector>
 #include "bstree.hpp"
 
-using namespace dss;
+using namespace contra_cpp;
 
 int main(int argc, const char **argv)
 {
@@ -26,7 +26,7 @@ int main(int argc, const char **argv)
     std::cerr << "random seed: " << seed << std::endl;
     srand(seed);
 
-    BStree tree;
+    bstree tree;
     assert(tree.size() == 0);
     int r;
     std::vector<int> v;
