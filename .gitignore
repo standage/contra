@@ -5,3 +5,4 @@ contra.cpp
 test/__pycache__/
 *.so
 .coverage
+*.swp

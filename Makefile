@@ -10,3 +10,6 @@ install:
 
 depend:
 	@ pip install --upgrade cython pep8 pytest coverage
+
+tree:
+	@ tree -I 'build|__pycache__|contra.cpp'
