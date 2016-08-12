@@ -1,3 +1,4 @@
+from __future__ import print_function
 from random import randint
 from contra import BStree
 import sys
@@ -67,7 +68,7 @@ def test_bst_rand():
         if tree.insert(i) == False:
             collisions.append(i)
     iot = tree.inorder()
-    assert tree.size == 100000 - (len(collisions))
+    assert len(tree) == 100000 - (len(collisions))
     print("DEBUG", len(collisions), file=sys.stderr)
 
     lastvalue = None
@@ -81,4 +82,4 @@ def test_bst_rand():
 
     for i in collisions:
         tree.remove(i)
-    assert tree.size == 100000 - (len(collisions) * 2)
+    assert len(tree) == 100000 - (len(collisions) * 2)
