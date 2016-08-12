@@ -20,6 +20,7 @@ cdef extern from 'bstree.hpp' namespace 'contra_cpp':
         bool insert(int value)
         bool search(int value)
         void remove(int value)
+        int height(int value)
         void inorder(ostream& stream)
         void preorder(ostream& stream)
         void postorder(ostream& stream)
@@ -33,6 +34,8 @@ cdef class BStree:
         return self.tree.search(value)
     def remove(self, int value):
         return self.tree.remove(value)
+    def height(self, int value):
+        return self.tree.height(value)
     def inorder(self):
         cdef stringstream ss
         self.tree.inorder(ss)

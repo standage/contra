@@ -23,6 +23,11 @@ unsigned int bstree::size()
     return _count;
 }
 
+int bstree::height(int value)
+{
+    return height(_root, value);
+}
+
 void bstree::inorder(std::ostream& stream)
 {
     stream << "[";
@@ -117,6 +122,23 @@ nodeptr bstree::minimum(nodeptr& root)
         return std::move(root);
     }
     return minimum(root->left);
+}
+
+int bstree::height(nodeptr& root, int value)
+{
+    if (!root) {
+        return -1;
+    }
+    else if (value == root->data) {
+        return root->height();
+    }
+    else if (value > root->data) {
+        return height(root->right, value);
+    }
+    else {
+        return height(root->left, value);
+    }
+
 }
 
 void bstree::inorder(nodeptr& root, std::ostream& stream)

@@ -17,6 +17,7 @@ class bstree
         bool search(int value);
         void remove(int value);
         unsigned int size();
+        int height(int value);
 
         void inorder(std::ostream& stream = std::cout);
         void preorder(std::ostream& stream = std::cout);
@@ -30,6 +31,7 @@ class bstree
         bool search(nodeptr& root, int value);
         nodeptr remove(nodeptr& root, int value);
         nodeptr minimum(nodeptr& root);
+        int height(nodeptr& root, int value);
 
         void inorder(nodeptr& root, std::ostream& stream);
         void preorder(nodeptr& root, std::ostream& stream);

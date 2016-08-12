@@ -83,3 +83,18 @@ def test_bst_rand():
     for i in collisions:
         tree.remove(i)
     assert len(tree) == 100000 - (len(collisions) * 2)
+
+
+def test_bst_height():
+    """
+    BST height test
+    """
+    values = [73, 50, 89, 65, 47, 84, 64, 55, 17, 32]
+    heights = [0, 1, 1, 2, 2, 2, 3, 4, 3, 4]
+
+    tree = BStree()
+    for v in values:
+        tree.insert(v)
+
+    for v, h in zip(values, heights):
+        assert tree.height(v) == h, (v, tree.height(v), h)
