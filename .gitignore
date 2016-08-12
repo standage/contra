@@ -4,3 +4,4 @@ contra.cpp
 .cache/
 test/__pycache__/
 *.so
+.coverage

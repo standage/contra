@@ -1,6 +1,8 @@
 # distutils: language = c++
 # distutils: sources = src/bstree.cpp
 # cython: c_string_type=str, c_string_encoding=ascii
+# cython: linetrace=True
+# distutils: define_macros=CYTHON_TRACE=1
 
 from libcpp cimport bool
 from libcpp.string cimport string

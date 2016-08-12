@@ -3,6 +3,7 @@ from random import randint
 from contra import BStree
 import sys
 
+
 def run(values, trav1, to_remove, trav2):
     tree = BStree()
     for i in values:
@@ -23,7 +24,7 @@ def test_bst_traversal_1():
     """
     BST traversal test 1
     """
-    values = [ 88, 74, 94, 50, 86, 70, 81, 11, 19, 48 ]
+    values = [88, 74, 94, 50, 86, 70, 81, 11, 19, 48]
     trav1 = [
         '[ 11 19 48 50 70 74 81 86 88 94 ]\n',
         '[ 88 74 50 11 19 48 70 86 81 94 ]\n',
@@ -35,14 +36,14 @@ def test_bst_traversal_1():
         '[ 88 81 50 11 19 48 70 86 94 ]\n',
         '[ 48 19 11 70 50 86 81 94 88 ]\n'
     ]
-    run(values, trav1, to_remove, trav2);
+    run(values, trav1, to_remove, trav2)
 
 
 def test_bst_traversal_2():
     """
     BST traversal test 2
     """
-    values = [ 92, 19, 21, 86, 35, 64, 51, 44, 60, 91 ]
+    values = [92, 19, 21, 86, 35, 64, 51, 44, 60, 91]
     trav1 = [
         '[ 19 21 35 44 51 60 64 86 91 92 ]\n',
         '[ 92 19 21 86 35 64 51 44 60 91 ]\n',
@@ -54,7 +55,7 @@ def test_bst_traversal_2():
         '[ 92 19 21 86 64 51 44 60 91 ]\n',
         '[ 44 60 51 64 91 86 21 19 92 ]\n'
     ]
-    run(values, trav1, to_remove, trav2);
+    run(values, trav1, to_remove, trav2)
 
 
 def test_bst_rand():
@@ -65,7 +66,7 @@ def test_bst_rand():
     collisions = list()
     for _ in range(100000):
         i = randint(-10e8, 10e8)
-        if tree.insert(i) == False:
+        if tree.insert(i) is False:
             collisions.append(i)
     iot = tree.inorder()
     assert len(tree) == 100000 - (len(collisions))
@@ -85,9 +86,9 @@ def test_bst_rand():
     assert len(tree) == 100000 - (len(collisions) * 2)
 
 
-def test_bst_height():
+def test_bst_height_1():
     """
-    BST height test
+    BST height test 1
     """
     values = [73, 50, 89, 65, 47, 84, 64, 55, 17, 32]
     heights = [0, 1, 1, 2, 2, 2, 3, 4, 3, 4]
@@ -98,3 +99,33 @@ def test_bst_height():
 
     for v, h in zip(values, heights):
         assert tree.height(v) == h, (v, tree.height(v), h)
+
+    tree.remove(50)
+    for v, h in zip([73, 55, 65, 64, 47, 89], [0, 1, 2, 3, 2, 1]):
+        assert tree.height(v) == h, (v, tree.height(v), h)
+
+    tree.remove(47)
+    for v, h in zip([73, 55, 17, 32, 65], [0, 1, 2, 3, 2]):
+        assert tree.height(v) == h, (v, tree.height(v), h)
+
+
+def test_bst_height_2():
+    """
+    BST height test 2
+    """
+    values = [96, 64, 49, 62, -11, 81, -95, -33, -80, 14, -74, 56, 79, 17,
+              -75, 83, -72, 23, -42, -55, 100, -22]
+    heights = [0, 1, 2, 3, 3, 2, 4, 5, 6, 4, 7, 4, 3, 5, 8, 3, 8, 6, 9, 10, 1,
+               6]
+
+    tree = BStree()
+    for v in values:
+        tree.insert(v)
+
+    for v, h in zip(values, heights):
+        assert tree.height(v) == h, (v, tree.height(v), h)
+
+    pre = ('[ 96 64 49 -11 -95 -33 -80 -74 -75 -72 -42 -55 -22 14 17 23 62 56 '
+           '81 79 83 100 ]\n')
+    pretest = tree.preorder()
+    assert pretest == pre, (pretest, pre)

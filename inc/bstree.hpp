@@ -29,9 +29,10 @@ class bstree
 
         bool insert(nodeptr& root, int value, int height);
         bool search(nodeptr& root, int value);
-        nodeptr remove(nodeptr& root, int value);
+        nodeptr remove(nodeptr& root, int value, bool decr = true);
         nodeptr minimum(nodeptr& root);
         int height(nodeptr& root, int value);
+        void decr_height(nodeptr& root);
 
         void inorder(nodeptr& root, std::ostream& stream);
         void preorder(nodeptr& root, std::ostream& stream);
