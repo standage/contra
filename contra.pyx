@@ -45,6 +45,9 @@ cdef class BStree:
         cdef stringstream ss
         self.tree.postorder(ss)
         return ss.str()
-    @property
-    def size(self):
+    def __repr__(self):
+        return '<contra.BStree instance with {} values>'.format(len(self))
+    def __str__(self):
+        return self.inorder()
+    def __len__(self):
         return self.tree.size()

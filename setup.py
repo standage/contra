@@ -15,10 +15,10 @@ setup(
     description='high-performance containers with a Python interface',
     ext_modules=cythonize(Extension(
         'contra',
-        sources=['aux/contra.pyx', 'src/bstree.cpp'],
+        sources=['contra.pyx', 'src/bstree.cpp'],
         include_dirs=['inc/'],
         language='c++',
-        extra_compile_args=['--std=c++11'],
+        extra_compile_args=['--std=c++11', '-Wno-unused-function'],
         extra_link_args=['--std=c++11']
     )),
 )
