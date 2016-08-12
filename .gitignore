@@ -6,3 +6,5 @@ test/__pycache__/
 *.so
 .coverage
 *.swp
+*.egg-info/
+dist/

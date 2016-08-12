@@ -1,6 +1,6 @@
 test: install
 	@ rm -f .coverage
-	@ py.test -v --cov=contra test/*.py
+	@ py.test -v test/*.py
 
 style:
 	@ pep8 test/*.py
