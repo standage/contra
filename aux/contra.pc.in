@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+sharedlibdir=${libdir}
+includedir=${prefix}/include/contra
+
+Name: contra
+Description: The core of the contra library. C++ API is unstable and not officially supported.
+URL: http://github.com/standage/contra
+Version: @VERSION@
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lcontra
+Cflags: -I${includedir}

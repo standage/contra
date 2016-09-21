@@ -9,3 +9,8 @@ test/__pycache__/
 *.egg-info/
 dist/
 src/*.o
+__pycache__/
+*.dylib*
+*.so*
+aux/contra.pc
+aux/example
