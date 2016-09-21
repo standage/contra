@@ -1,58 +1,68 @@
 #include "bstree.hpp"
 #include "node.hpp"
 
-using namespace contra_cpp;
+namespace contra_cpp
+{
 
-bool bstree::insert(int value)
+template<typename Data>
+bool bstree<Data>::insert(Data value)
 {
     return insert(_root, value, -1);
 }
 
-bool bstree::search(int value)
+template<typename Data>
+bool bstree<Data>::search(Data value)
 {
     return search(_root, value);
 }
 
-void bstree::remove(int value)
+template<typename Data>
+void bstree<Data>::remove(Data value)
 {
     _root = remove(_root, value);
 }
 
-unsigned int bstree::size()
+template<typename Data>
+size_t bstree<Data>::size()
 {
     return _count;
 }
 
-int bstree::height(int value)
+template<typename Data>
+int bstree<Data>::height(Data value)
 {
     return height(_root, value);
 }
 
-void bstree::inorder(std::ostream& stream)
+template<typename Data>
+void bstree<Data>::inorder(std::ostream& stream)
 {
     stream << "[";
     inorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-void bstree::preorder(std::ostream& stream)
+template<typename Data>
+void bstree<Data>::preorder(std::ostream& stream)
 {
     stream << "[";
     preorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-void bstree::postorder(std::ostream& stream)
+template<typename Data>
+void bstree<Data>::postorder(std::ostream& stream)
 {
     stream << "[";
     postorder(_root, stream);
     stream << " ]" << std::endl;
 }
 
-bool bstree::insert(nodeptr& root, int value, int height)
+template<typename Data>
+bool bstree<Data>::insert(nodeptr& root, Data value, int height)
 {
     if (!root) {
-        root = nodeptr(new node(value, height + 1));
+        root = nodeptr(new node<Data>(value, height + 1));
         _count++;
         return true;
     }
@@ -65,7 +75,8 @@ bool bstree::insert(nodeptr& root, int value, int height)
     return false;
 }
 
-bool bstree::search(nodeptr& root, int value)
+template<typename Data>
+bool bstree<Data>::search(nodeptr& root, Data value)
 {
     if (!root) {
         return false;
@@ -82,7 +93,11 @@ bool bstree::search(nodeptr& root, int value)
 
 }
 
-nodeptr bstree::remove(nodeptr& root, int value, bool decr)
+template<typename Data>
+std::unique_ptr<node<Data>> bstree<Data>::remove(
+    std::unique_ptr<node<Data>>& root,
+    Data value, bool decr
+)
 {
     if (!root) {
         return std::move(root);
@@ -122,7 +137,10 @@ nodeptr bstree::remove(nodeptr& root, int value, bool decr)
     return std::move(root);
 }
 
-nodeptr bstree::minimum(nodeptr& root)
+template<typename Data>
+std::unique_ptr<node<Data>> bstree<Data>::minimum(
+    std::unique_ptr<node<Data>>& root
+)
 {
     if (!root || !root->left) {
         return std::move(root);
@@ -130,7 +148,8 @@ nodeptr bstree::minimum(nodeptr& root)
     return minimum(root->left);
 }
 
-int bstree::height(nodeptr& root, int value)
+template<typename Data>
+int bstree<Data>::height(nodeptr& root, Data value)
 {
     if (!root) {
         return -1;
@@ -146,7 +165,8 @@ int bstree::height(nodeptr& root, int value)
     }
 }
 
-void bstree::decr_height(nodeptr& root)
+template<typename Data>
+void bstree<Data>::decr_height(nodeptr& root)
 {
     if (!root) {
         return;
@@ -156,7 +176,8 @@ void bstree::decr_height(nodeptr& root)
     decr_height(root->right);
 }
 
-void bstree::inorder(nodeptr& root, std::ostream& stream)
+template<typename Data>
+void bstree<Data>::inorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         inorder(root->left, stream);
@@ -165,7 +186,8 @@ void bstree::inorder(nodeptr& root, std::ostream& stream)
     }
 }
 
-void bstree::preorder(nodeptr& root, std::ostream& stream)
+template<typename Data>
+void bstree<Data>::preorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         stream << " " << root->data;
@@ -174,7 +196,8 @@ void bstree::preorder(nodeptr& root, std::ostream& stream)
     }
 }
 
-void bstree::postorder(nodeptr& root, std::ostream& stream)
+template<typename Data>
+void bstree<Data>::postorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
         postorder(root->left, stream);
@@ -182,3 +205,7 @@ void bstree::postorder(nodeptr& root, std::ostream& stream)
         stream << " " << root->data;
     }
 }
+
+template class bstree<long int>;
+template class bstree<unsigned int>;
+} // namespace contra_cpp

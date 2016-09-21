@@ -17,26 +17,26 @@ cdef extern from "<sstream>" namespace "std":
         string str()
 
 cdef extern from 'bstree.hpp' namespace 'contra_cpp':
-    cdef cppclass bstree:
+    cdef cppclass bstree[T]:
         bstree() except +
-        bool insert(int value)
-        bool search(int value)
-        void remove(int value)
-        int height(int value)
+        bool insert(T value)
+        bool search(T value)
+        void remove(T value)
+        size_t height(T value)
         void inorder(ostream& stream)
         void preorder(ostream& stream)
         void postorder(ostream& stream)
         unsigned int size()
 
 cdef class BStree:
-    cdef bstree tree
-    def insert(self, int value):
+    cdef bstree[long int] tree
+    def insert(self, long int value):
         return self.tree.insert(value)
-    def search(self, int value):
+    def search(self, long int value):
         return self.tree.search(value)
-    def remove(self, int value):
+    def remove(self, long int value):
         return self.tree.remove(value)
-    def height(self, int value):
+    def height(self, long int value):
         return self.tree.height(value)
     def inorder(self):
         cdef stringstream ss

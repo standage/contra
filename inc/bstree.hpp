@@ -8,30 +8,32 @@
 namespace contra_cpp
 {
 
+template<typename Data>
 class bstree
 {
     public:
-        bstree() : _root(nullptr), _count(0) {}
+        bstree<Data>() : _root(nullptr), _count(0) {}
 
-        bool insert(int value);
-        bool search(int value);
-        void remove(int value);
-        unsigned int size();
-        int height(int value);
+        bool insert(Data value);
+        bool search(Data value);
+        void remove(Data value);
+        size_t size();
+        int height(Data value);
 
         void inorder(std::ostream& stream = std::cout);
         void preorder(std::ostream& stream = std::cout);
         void postorder(std::ostream& stream = std::cout);
 
     protected:
+        typedef std::unique_ptr<node<Data>> nodeptr;
         nodeptr _root;
-        unsigned int _count;
+        size_t _count;
 
-        bool insert(nodeptr& root, int value, int height);
-        bool search(nodeptr& root, int value);
-        nodeptr remove(nodeptr& root, int value, bool decr = true);
+        bool insert(nodeptr& root, Data value, int height);
+        bool search(nodeptr& root, Data value);
+        nodeptr remove(nodeptr& root, Data value, bool decr = true);
         nodeptr minimum(nodeptr& root);
-        int height(nodeptr& root, int value);
+        int height(nodeptr& root, Data value);
         void decr_height(nodeptr& root);
 
         void inorder(nodeptr& root, std::ostream& stream);

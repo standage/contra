@@ -6,12 +6,13 @@
 namespace contra_cpp
 {
 
+template<typename Data>
 class node
 {
     public:
-        std::unique_ptr<node> left;
-        std::unique_ptr<node> right;
-        int data;
+        std::unique_ptr<node<Data>> left;
+        std::unique_ptr<node<Data>> right;
+        Data data;
         int height;
 
         node(int value)
@@ -19,7 +20,6 @@ class node
         node(int value, int ht)
             : left(nullptr), right(nullptr), data(value), height(ht) {}
 };
-typedef std::unique_ptr<node> nodeptr;
 
 } // namespace contra_cpp
 
