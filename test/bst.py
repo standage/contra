@@ -1,6 +1,7 @@
 from __future__ import print_function
 from random import randint
-from contra import BStree
+from contra import BStree, BStreeLarge, BStreeSmall
+import pytest
 import sys
 
 
@@ -70,7 +71,6 @@ def test_bst_rand():
             collisions.append(i)
     iot = tree.inorder()
     assert len(tree) == 100000 - (len(collisions))
-    print("DEBUG", len(collisions), file=sys.stderr)
 
     lastvalue = None
     for value in iot.split():
@@ -129,3 +129,37 @@ def test_bst_height_2():
            '81 79 83 100 ]\n')
     pretest = tree.preorder()
     assert pretest == pre, (pretest, pre)
+
+
+def test_bst_large():
+    """
+    BST large numbers
+    """
+
+    tree = BStreeLarge()
+    values = [3e9, 3.7e9, 2.1e7, 4.4e8, 4.4e9, 1, 3.6e9, 5e14]
+    for v in values:
+        tree.insert(v)
+    inorder = ('[ 1 21000000 440000000 3000000000 3600000000 3700000000 '
+               '4400000000 500000000000000 ]\n')
+    inordertest = tree.inorder()
+    assert inordertest == inorder, (inordertest, inorder)
+
+
+def test_bst_small():
+    """
+    BST small numbers
+    """
+
+    tree = BStreeSmall()
+    with pytest.raises(OverflowError):
+        for v in [254, 255, 256, 257]:
+            tree.insert(v)
+
+    tree = BStreeSmall()
+    values = [128, 64, 196, 4, 16]
+    for v in values:
+        tree.insert(v)
+    inorder = '[ 4 16 64 128 196 ]\n'
+    inordertest = tree.inorder()
+    assert inordertest == inorder, (inordertest, inorder)

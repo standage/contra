@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "bstree.hpp"
 #include "node.hpp"
 
@@ -63,6 +64,7 @@ bool bstree<Data>::insert(nodeptr& root, Data value, int height)
 {
     if (!root) {
         root = nodeptr(new node<Data>(value, height + 1));
+//std::cerr << "DEBUG value=" << value << " root->data=" << root->data << '\n';
         _count++;
         return true;
     }
@@ -94,8 +96,8 @@ bool bstree<Data>::search(nodeptr& root, Data value)
 }
 
 template<typename Data>
-std::unique_ptr<node<Data>> bstree<Data>::remove(
-    std::unique_ptr<node<Data>>& root,
+std::unique_ptr< node<Data> > bstree<Data>::remove(
+    std::unique_ptr< node<Data> >& root,
     Data value, bool decr
 )
 {
@@ -138,8 +140,8 @@ std::unique_ptr<node<Data>> bstree<Data>::remove(
 }
 
 template<typename Data>
-std::unique_ptr<node<Data>> bstree<Data>::minimum(
-    std::unique_ptr<node<Data>>& root
+std::unique_ptr< node<Data> > bstree<Data>::minimum(
+    std::unique_ptr< node<Data> >& root
 )
 {
     if (!root || !root->left) {
@@ -179,9 +181,13 @@ void bstree<Data>::decr_height(nodeptr& root)
 template<typename Data>
 void bstree<Data>::inorder(nodeptr& root, std::ostream& stream)
 {
+    // By default std::cout prints some integer types (such as uint8_t) as
+    // character values rather than numerical values. We force printing as
+    // numerical value by prepending root->data with a + symbol. See
+    // http://stackoverflow.com/a/31991844/459780.
     if(root) {
         inorder(root->left, stream);
-        stream << " " << root->data;
+        stream << " " << +root->data;
         inorder(root->right, stream);
     }
 }
@@ -190,7 +196,7 @@ template<typename Data>
 void bstree<Data>::preorder(nodeptr& root, std::ostream& stream)
 {
     if(root) {
-        stream << " " << root->data;
+        stream << " " << +root->data;
         preorder(root->left, stream);
         preorder(root->right, stream);
     }
@@ -202,10 +208,11 @@ void bstree<Data>::postorder(nodeptr& root, std::ostream& stream)
     if(root) {
         postorder(root->left, stream);
         postorder(root->right, stream);
-        stream << " " << root->data;
+        stream << " " << +root->data;
     }
 }
 
-template class bstree<long int>;
-template class bstree<unsigned int>;
+template class bstree<int32_t>;
+template class bstree<uint64_t>;
+template class bstree<uint8_t>;
 } // namespace contra_cpp

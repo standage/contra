@@ -10,14 +10,14 @@ template<typename Data>
 class node
 {
     public:
-        std::unique_ptr<node<Data>> left;
-        std::unique_ptr<node<Data>> right;
+        std::unique_ptr< node<Data> > left;
+        std::unique_ptr< node<Data> > right;
         Data data;
         int height;
 
-        node(int value)
+        node<Data>(Data value)
             : left(nullptr), right(nullptr), data(value), height(-1) {}
-        node(int value, int ht)
+        node<Data>(Data value, int ht)
             : left(nullptr), right(nullptr), data(value), height(ht) {}
 };
 

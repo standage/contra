@@ -13,3 +13,6 @@ depend:
 
 tree:
 	@ tree -I 'build|__pycache__|contra.cpp'
+
+clean:
+	@ rm -f .coverage build/ *.egg-info/ dist/

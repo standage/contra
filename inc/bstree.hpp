@@ -25,7 +25,7 @@ class bstree
         void postorder(std::ostream& stream = std::cout);
 
     protected:
-        typedef std::unique_ptr<node<Data>> nodeptr;
+        typedef std::unique_ptr< node<Data> > nodeptr;
         nodeptr _root;
         size_t _count;
 
