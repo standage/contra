@@ -62,3 +62,6 @@ $ ./example
 [ -82 -36 -35 -27 -19 2 9 32 71 95 ]
 $
 ```
+
+[travisbadge]: https://img.shields.io/travis/standage/contra.svg
+[mit]: https://img.shields.io/pypi/l/contra.svg

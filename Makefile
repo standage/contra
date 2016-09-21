@@ -16,7 +16,7 @@ LIB_VERSION = $(shell python setup.py version \
                     | grep Version \
                     | cut -f 2 -d ' ' \
                     | cut -f 1 -d + \
-                    && rm -r __pycache__)
+                    && rm -rf __pycache__)
 endif
 
 # Dynamic library config
