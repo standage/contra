@@ -8,3 +8,4 @@ test/__pycache__/
 *.swp
 *.egg-info/
 dist/
+src/*.o

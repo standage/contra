@@ -8,6 +8,7 @@
 # -----------------------------------------------------------------------------
 
 from setuptools import setup, Extension
+import versioneer
 
 contra = Extension(
     'contra',
@@ -23,4 +24,6 @@ setup(
     description='high-performance containers with a Python interface',
     ext_modules=[contra],
     install_requires=['cython', 'pep8', 'pytest'],
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
 )
