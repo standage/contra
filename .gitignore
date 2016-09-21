@@ -1,2 +1,16 @@
 obj/*.o
-bin/test
+build/
+contra.cpp
+.cache/
+test/__pycache__/
+*.so
+.coverage
+*.swp
+*.egg-info/
+dist/
+src/*.o
+__pycache__/
+*.dylib*
+*.so*
+aux/contra.pc
+aux/example
