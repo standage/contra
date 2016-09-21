@@ -1,1 +1,3 @@
 _version.py export-subst
+versioneer.py linguist-vendored
+aux/_version.py linguist-vendored
