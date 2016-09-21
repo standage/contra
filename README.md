@@ -1,3 +1,8 @@
+# Contra
+
+[![Contra build status][travisbadge]](https://travis-ci.org/standage/contra)
+[![MIT licensed][mit]](https://github.com/standage/contra/blob/master/LICENSE.txt)
+
 Contra provides a variety of high-performance dynamic containers.
 The core is implemented in C++, but is accessed primarily through Python.
 
