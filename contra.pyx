@@ -1,3 +1,10 @@
+# -----------------------------------------------------------------------------
+# Copyright (c) 2016   Daniel Standage <daniel.standage@gmail.com>
+#
+# This file is part of contra (http://github.com/standage/contra) and is
+# licensed under the MIT license: see LICENSE.txt.
+# -----------------------------------------------------------------------------
+
 # distutils: language = c++
 # distutils: sources = src/bstree.cpp
 # cython: c_string_type=str, c_string_encoding=ascii

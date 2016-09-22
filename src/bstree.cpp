@@ -1,3 +1,10 @@
+// -----------------------------------------------------------------------------
+// Copyright (c) 2016   Daniel Standage <daniel.standage@gmail.com>
+//
+// This file is part of contra (http://github.com/standage/contra) and is
+// licensed under the MIT license: see LICENSE.txt.
+// -----------------------------------------------------------------------------
+
 #include <stdint.h>
 #include "bstree.hpp"
 #include "node.hpp"

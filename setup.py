@@ -3,8 +3,8 @@
 # -----------------------------------------------------------------------------
 # Copyright (c) 2016   Daniel Standage <daniel.standage@gmail.com>
 #
-# This file is part of contra (http://github.com/standage/genhub) and is
-# licensed under the BSD 3-clause license: see LICENSE.txt.
+# This file is part of contra (http://github.com/standage/contra) and is
+# licensed under the MIT license: see LICENSE.txt.
 # -----------------------------------------------------------------------------
 
 from setuptools import setup, Extension
@@ -29,7 +29,7 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
