@@ -30,7 +30,7 @@ setup(
     author_email='daniel.standage@gmail.com',
     license='MIT',
     ext_modules=[contra],
-    install_requires=['cython'],
+    install_requires=['setuptools>=18.0', 'cython'],
     tests_require=['pytest'],
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
