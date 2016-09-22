@@ -10,7 +10,7 @@ env:
     - CXX=g++
     - CXX=clang
 before_install:
-    - sudo apt-get -qq upgrade
+    - sudo apt-get -qq update
     - sudo apt-get install clang
 matrix:
     include:
