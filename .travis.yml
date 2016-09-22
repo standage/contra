@@ -6,9 +6,9 @@ dist: trusty
 python:
     - 2.7
     - 3.5
-compiler:
-    - gcc
-    - clang
+env:
+    - CXX=g++
+    - CXX=clang
 matrix:
     include:
         - os: osx
