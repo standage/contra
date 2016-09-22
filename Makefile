@@ -51,8 +51,8 @@ style:
 install:
 	@ pip install .
 
-depend:
-	@ pip install --upgrade cython pep8 pytest coverage
+devenv:
+	@ pip install --upgrade cython pep8 pytest
 
 tree:
 	@ tree -I 'build|__pycache__|contra.cpp'
@@ -60,6 +60,12 @@ tree:
 clean:
 	@ rm -rf build/ *.egg-info/ dist/ src/*.o *.$(SHARED_EXT)* __pycache__/ \
 	  contra.cpp aux/contra.pc test/__pycache__/
+
+build:
+	@ python setup.py sdist build
+
+pypi:
+	@ python setup.py sdist upload
 
 
 

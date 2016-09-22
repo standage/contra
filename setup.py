@@ -9,6 +9,9 @@
 
 from setuptools import setup, Extension
 import versioneer
+import glob
+
+headers = list(glob.glob('inc/*.hpp'))
 
 contra = Extension(
     'contra',
@@ -22,8 +25,13 @@ contra = Extension(
 setup(
     name='contra',
     description='High-performance containers with a Python interface',
+    url='http://github.com/standage/contra',
+    author='Daniel Standage',
+    author_email='daniel.standage@gmail.com',
+    license='MIT',
     ext_modules=[contra],
-    install_requires=['cython', 'pep8', 'pytest'],
+    install_requires=['cython'],
+    tests_require=['pytest'],
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     classifiers=[
