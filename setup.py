@@ -21,9 +21,18 @@ contra = Extension(
 
 setup(
     name='contra',
-    description='high-performance containers with a Python interface',
+    description='High-performance containers with a Python interface',
     ext_modules=[contra],
     install_requires=['cython', 'pep8', 'pytest'],
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'License :: OSI Approved :: BSD License',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Topic :: Scientific/Engineering :: Bio-Informatics'
+    ],
 )
