@@ -27,20 +27,14 @@ class filter
         std::vector<std::vector<CounterType>> _arrays;
 };
 
-#if (0)
+template<typename ElementType> class countfilter : public filter<ElementType, uint8_t, 255> {};
+template<typename ElementType> class bigcountfilter : public filter<ElementType, uint32_t, 8589934591> {};
 template<typename ElementType>
 class bloomfilter : public filter<ElementType, bool, 1>
 {
     public:
         bool get(ElementType element);
-
-    protected:
-        std::vector<std::vector<bool>> _arrays;
 };
-#endif
-template<typename ElementType> class bloomfilter : public filter<ElementType, bool, 1> {};
-template<typename ElementType> class countfilter : public filter<ElementType, uint8_t, 255> {};
-template<typename ElementType> class bigcountfilter : public filter<ElementType, uint32_t, 8589934591> {};
 
 } // namespace contra_cpp
 
