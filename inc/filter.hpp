@@ -25,9 +25,9 @@ class filter
 
     protected:
         std::vector<std::vector<CounterType>> _arrays;
-
 };
 
+#if (0)
 template<typename ElementType>
 class bloomfilter : public filter<ElementType, bool, 1>
 {
@@ -37,9 +37,11 @@ class bloomfilter : public filter<ElementType, bool, 1>
     protected:
         std::vector<std::vector<bool>> _arrays;
 };
+#endif
+template<typename ElementType> class bloomfilter : public filter<ElementType, bool, 1> {};
 template<typename ElementType> class countfilter : public filter<ElementType, uint8_t, 255> {};
 template<typename ElementType> class bigcountfilter : public filter<ElementType, uint32_t, 8589934591> {};
 
 } // namespace contra_cpp
 
-#endif // define CONTRA_BS_TREE
+#endif // define CONTRA_FILTER

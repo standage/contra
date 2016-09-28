@@ -45,6 +45,7 @@ CounterType filter<ElementType, CounterType, maxcount>::get(ElementType element)
     return mincount;
 }
 
+#if (0)
 template<typename ElementType>
 bool bloomfilter<ElementType>::get(ElementType element)
 {
@@ -56,6 +57,7 @@ bool bloomfilter<ElementType>::get(ElementType element)
     }
     return true;
 }
+#endif
 
 template class filter<uint64_t, bool, 1>;
 template class filter<uint64_t, uint8_t, 255>;
