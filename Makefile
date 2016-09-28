@@ -12,7 +12,7 @@ PREFIX=/usr/local
 CXXFLAGS=-Wall -O3 --std=c++11 -Iinc/
 
 # Source/header files
-HEADERS=inc/node.hpp inc/bstree.hpp
+HEADERS=inc/node.hpp inc/bstree.hpp inc/filter.hpp
 
 
 # Determine package version from git commits/tags
@@ -43,10 +43,10 @@ endif
 # Python targets
 
 test: install
-	@ py.test -v test/*.py
+	@ py.test -v tst/*.py
 
 style:
-	@ pep8 test/*.py
+	@ pep8 tst/*.py
 
 install:
 	@ pip install .
@@ -76,7 +76,7 @@ lib: aux/$(SONAME)
 src/%.o: src/%.cpp
 	@ $(CXX) $(CXXFLAGS) -c -o $@ $^
 
-aux/$(SONAME): src/bstree.o
+aux/$(SONAME): src/bstree.o src/filter.o
 	@ $(CXX) $(CXXFLAGS) -shared -o $@ $^
 
 aux/contra.pc: aux/contra.pc.in
