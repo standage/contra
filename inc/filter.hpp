@@ -8,6 +8,7 @@
 #ifndef CONTRA_FILTER
 #define CONTRA_FILTER
 
+#include <stddef.h>
 #include <stdint.h>
 #include <vector>
 
