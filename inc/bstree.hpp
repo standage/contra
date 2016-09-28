@@ -19,7 +19,7 @@ template<typename Data>
 class bstree
 {
     public:
-        bstree<Data>() : _root(nullptr), _count(0) {}
+        bstree() : _root(nullptr), _count(0) {}
 
         bool insert(Data value);
         bool search(Data value);
