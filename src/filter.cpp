@@ -12,7 +12,8 @@ namespace contra_cpp
 
 template<typename ElementType, typename CounterType, size_t maxcount>
 filter<ElementType, CounterType, maxcount>::filter(std::vector<size_t> array_sizes)
-        : _arrays(array_sizes.size(), std::vector<CounterType>())
+        : _cells_occupied(array_sizes.size(), 0),
+          _arrays(array_sizes.size(), std::vector<CounterType>())
 {
     for (size_t i = 0; i < array_sizes.size(); i++) {
         size_t size = array_sizes[i];
@@ -23,10 +24,13 @@ filter<ElementType, CounterType, maxcount>::filter(std::vector<size_t> array_siz
 template<typename ElementType, typename CounterType, size_t maxcount>
 void filter<ElementType, CounterType, maxcount>::add(ElementType element)
 {
-    for (auto array : _arrays) {
-        size_t index = element % array.size();
-        if (array[index] < maxcount) {
-            array[index] = array[index] + 1;
+    for (size_t i = 0; i < _arrays.size(); i++){
+        size_t index = element % _arrays[i].size();
+        if (_arrays[i][index] == 0) {
+            _cells_occupied[i] += 1;
+        }
+        if (_arrays[i][index] < maxcount) {
+            _arrays[i][index] = _arrays[i][index] + 1;
         }
     }
 }
@@ -55,6 +59,13 @@ bool bloomfilter<ElementType>::get(ElementType element)
         }
     }
     return true;
+}
+
+template<typename ElementType, typename CounterType, size_t maxcount>
+double filter<ElementType, CounterType, maxcount>::estimate_fpr()
+{
+    // TODO!!!
+    return 0.0;
 }
 
 template class filter<uint64_t, bool, 1>;

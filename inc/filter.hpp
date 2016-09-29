@@ -22,8 +22,10 @@ class filter
         explicit filter(std::vector<size_t> array_sizes);
         void add(ElementType element);
         CounterType get(ElementType element);
+        double estimate_fpr();
 
     protected:
+        std::vector<size_t> _cells_occupied;
         std::vector<std::vector<CounterType>> _arrays;
 };
 
