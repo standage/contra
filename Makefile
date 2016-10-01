@@ -88,3 +88,12 @@ libinstall: aux/$(SONAME) aux/contra.pc $(HEADERS)
 	cp aux/contra.pc $(PREFIX)/lib/pkgconfig/
 	cp aux/$(SONAME) $(PREFIX)/lib/
 	ln -sf $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/libcontra.$(SHARED_EXT)
+
+libuninstall:
+	rm -rf $(PREFIX)/include/contra/ $(PREFIX)/lib/libcontra.* \
+           $(PREFIX)/lib/pkgconfig/contra.pc
+
+libtest:
+	cd aux && make
+	aux/example > libtest.txt
+	shasum -c aux/libtest-out-check.shasum
