@@ -18,6 +18,7 @@ matrix:
 install:
     - pip install pytest
     - sudo make libinstall
+    - sudo ldconfig
 script:
     - make test
     - make libtest
