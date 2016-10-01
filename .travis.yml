@@ -13,5 +13,9 @@ matrix:
           language: generic
           osx_image: xcode7.3
           python: 2.7
+        - os: linux
+          sudo: required
+          dist: trusty
+          script: make libinstall libtest
 install: pip install pytest
 script: make test
