@@ -82,13 +82,13 @@ aux/$(SONAME): src/bstree.o
 
 
 aux/contra.pc: aux/contra.pc.in
-	@ sed -e 's,@prefix@,$(PREFIX),' -e 's,@VERSION@,$(VERSION),' $< >$@
+	@ sed -e 's,@prefix@,$(PREFIX),' -e 's,@VERSION@,$(VERSION),' $< > $@
 
 libinstall: aux/$(SONAME) aux/contra.pc $(HEADERS)
 	mkdir -p $(PREFIX)/lib/ $(PREFIX)/lib/pkgconfig/ $(PREFIX)/include/contra/
 	cp $(HEADERS) $(PREFIX)/include/contra/
 	cp aux/contra.pc $(PREFIX)/lib/pkgconfig/
-	cp aux/$(SONAME)* $(PREFIX)/lib/
+	cp aux/libcontra* $(PREFIX)/lib/
 
 libuninstall:
 	rm -rf $(PREFIX)/include/contra/ $(PREFIX)/lib/libcontra.* \
