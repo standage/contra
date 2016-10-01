@@ -16,6 +16,8 @@ matrix:
         - os: linux
           sudo: required
           dist: trusty
-          script: make libinstall libtest
+          install: sudo make libinstall
+          script: make libtest
+          language: c++
 install: pip install pytest
 script: make test
