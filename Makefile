@@ -9,7 +9,7 @@
 PREFIX=/usr/local
 
 # Compilation configs
-CXXFLAGS=-Wall -O3 --std=c++11 -Iinc/
+CXXFLAGS=-Wall -O3 --std=c++11 -Iinc/ -fPIC
 
 # Source/header files
 HEADERS=inc/node.hpp inc/bstree.hpp inc/filter.hpp
@@ -71,20 +71,30 @@ pypi:
 
 # C++ library targets
 
-lib: aux/$(SONAME)
+lib: aux/$(SONAME) aux/contra.pc
 
 src/%.o: src/%.cpp
 	@ $(CXX) $(CXXFLAGS) -c -o $@ $^
 
 aux/$(SONAME): src/bstree.o src/filter.o
 	@ $(CXX) $(CXXFLAGS) -shared -o $@ $^
+	@ ln -sf $(SONAME) aux/libcontra.$(SHARED_EXT)
+
 
 aux/contra.pc: aux/contra.pc.in
-	sed -e 's,@prefix@,$(PREFIX),' -e 's,@VERSION@,$(VERSION),' $< >$@
+	@ sed -e 's,@prefix@,$(PREFIX),' -e 's,@VERSION@,$(VERSION),' $< > $@
 
 libinstall: aux/$(SONAME) aux/contra.pc $(HEADERS)
 	mkdir -p $(PREFIX)/lib/ $(PREFIX)/lib/pkgconfig/ $(PREFIX)/include/contra/
 	cp $(HEADERS) $(PREFIX)/include/contra/
 	cp aux/contra.pc $(PREFIX)/lib/pkgconfig/
-	cp aux/$(SONAME) $(PREFIX)/lib/
-	ln -sf $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/libcontra.$(SHARED_EXT)
+	cp aux/libcontra* $(PREFIX)/lib/
+
+libuninstall:
+	rm -rf $(PREFIX)/include/contra/ $(PREFIX)/lib/libcontra.* \
+           $(PREFIX)/lib/pkgconfig/contra.pc
+
+libtest:
+	cd aux && make
+	aux/example > libtest.txt
+	shasum -c aux/libtest-out-check.shasum

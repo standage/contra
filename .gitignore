@@ -16,3 +16,4 @@ aux/contra.pc
 aux/example
 *.pyc
 env/
+libtest.txt
