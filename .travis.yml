@@ -13,11 +13,11 @@ matrix:
           language: generic
           osx_image: xcode7.3
           python: 2.7
-        - os: linux
-          sudo: required
-          dist: trusty
-          install: sudo make libinstall
-          script: make libtest
-          language: c++
-install: pip install pytest
-script: make test
+          install: pip install pytest
+          script: make test
+install:
+    - pip install pytest
+    - sudo make libinstall
+script:
+    - make test
+    - make libtest
