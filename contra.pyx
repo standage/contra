@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 
 # distutils: language = c++
-# distutils: sources = src/bstree.cpp, src/filter.cpp
+# distutils: sources = src/bstree.cpp src/filter.cpp
 # cython: c_string_type=str, c_string_encoding=ascii
 
 from libcpp cimport bool
