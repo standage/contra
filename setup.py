@@ -13,7 +13,7 @@ import glob
 
 headers = list(glob.glob('inc/*.hpp'))
 sources = list(glob.glob('src/*.cpp'))
-cythons = list(glob.glob('pyx/*.pyx'))
+cythons = ['contra.pyx']
 
 contra = Extension(
     'contra',

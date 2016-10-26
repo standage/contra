@@ -14,6 +14,13 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libc.stdint cimport int32_t, uint32_t, uint64_t, uint8_t
 
+# Cython doesn't support integer template instantiation directly
+# See https://groups.google.com/forum/#!topic/cython-users/xAZxdCFw6Xs
+cdef extern from *:
+    ctypedef int Int1 "1"
+    ctypedef int Int255 "255"
+    ctypedef int IntBig "8589934591"
+
 cdef extern from "<iostream>" namespace "std":
     cdef cppclass ostream:
         ostream() except +
@@ -38,28 +45,12 @@ cdef extern from 'bstree.hpp' namespace 'contra_cpp':
         unsigned int size()
 
 cdef extern from 'filter.hpp' namespace 'contra_cpp':
-    cdef cppclass bloomfilter[T]:
-        bloomfilter() except +
-        bloomfilter(vector[size_t] array_sizes) except +
+    cdef cppclass filter[E, C, M]:
+        filter() except +
+        filter(vector[size_t] array_sizes) except +
         void init(vector[size_t] array_sizes)
-        void add(T value)
-        bool get(T value)
-        size_t size()
-        double estimate_fpr()
-    cdef cppclass countfilter[T]:
-        countfilter() except +
-        countfilter(vector[size_t] array_sizes) except +
-        void init(vector[size_t] array_sizes)
-        void add(T value)
-        uint8_t get(T value)
-        size_t size()
-        double estimate_fpr()
-    cdef cppclass bigcountfilter[T]:
-        bigcountfilter() except +
-        bigcountfilter(vector[size_t] array_sizes) except +
-        void init(vector[size_t] array_sizes)
-        void add(T value)
-        uint32_t get(T value)
+        void add(E value)
+        C get(E value)
         size_t size()
         double estimate_fpr()
 
@@ -153,7 +144,7 @@ cdef class BStreeSmall:
         return self.tree.size()
 
 cdef class BloomFilter:
-    cdef bloomfilter[uint64_t] bf;
+    cdef filter[uint64_t, bool, Int1] bf;
     def __cinit__(self, list array_sizes):
         cdef vector[size_t] as = array_sizes
         self.bf.init(as)
@@ -169,7 +160,7 @@ cdef class BloomFilter:
         return self.bf.size()
 
 cdef class CountFilter:
-    cdef countfilter[uint64_t] cf;
+    cdef filter[uint64_t, uint8_t, Int255] cf;
     def __cinit__(self, list array_sizes):
         cdef vector[size_t] as = array_sizes
         self.cf.init(as)
@@ -185,7 +176,7 @@ cdef class CountFilter:
         return self.cf.size()
 
 cdef class BigCountFilter:
-    cdef bigcountfilter[uint64_t] bcf;
+    cdef filter[uint64_t, uint32_t, IntBig] bcf;
     def __cinit__(self, list array_sizes):
         cdef vector[size_t] as = array_sizes
         self.bcf.init(as)
