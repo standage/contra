@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "bstree.hpp"
+#include "filter.hpp"
 
 using namespace contra_cpp;
 
@@ -12,5 +13,10 @@ int main()
         tree.insert(v);
     }
     tree.inorder();
+
+    std::vector<size_t> array_sizes = {97, 91};
+    filter<uint64_t, uint8_t, 255> cf(array_sizes);
+    cf.add(5);
+
     return 0;
 }

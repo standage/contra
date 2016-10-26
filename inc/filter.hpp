@@ -19,9 +19,12 @@ template<typename ElementType, typename CounterType, size_t maxcount>
 class filter
 {
     public:
+        filter();
         explicit filter(std::vector<size_t> array_sizes);
+        void init(std::vector<size_t> array_sizes);
         void add(ElementType element);
         CounterType get(ElementType element);
+        size_t size();
         double estimate_fpr();
 
     protected:

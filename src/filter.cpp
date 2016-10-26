@@ -11,10 +11,27 @@ namespace contra_cpp
 {
 
 template<typename ElementType, typename CounterType, size_t maxcount>
+filter<ElementType, CounterType, maxcount>::filter()
+{
+
+}
+
+template<typename ElementType, typename CounterType, size_t maxcount>
 filter<ElementType, CounterType, maxcount>::filter(std::vector<size_t> array_sizes)
         : _cells_occupied(array_sizes.size(), 0),
           _arrays(array_sizes.size(), std::vector<CounterType>())
 {
+    for (size_t i = 0; i < array_sizes.size(); i++) {
+        size_t size = array_sizes[i];
+        _arrays[i].resize(size, 0);
+    }
+}
+
+template<typename ElementType, typename CounterType, size_t maxcount>
+void filter<ElementType, CounterType, maxcount>::init(std::vector<size_t> array_sizes)
+{
+    _cells_occupied.resize(array_sizes.size(), 0);
+    _arrays.resize(array_sizes.size(), std::vector<CounterType>());
     for (size_t i = 0; i < array_sizes.size(); i++) {
         size_t size = array_sizes[i];
         _arrays[i].resize(size, 0);
@@ -59,6 +76,16 @@ bool bloomfilter<ElementType>::get(ElementType element)
         }
     }
     return true;
+}
+
+template<typename ElementType, typename CounterType, size_t maxcount>
+size_t filter<ElementType, CounterType, maxcount>::size()
+{
+    size_t size = 0;
+    for (auto array : this->_arrays) {
+        size += array.size();
+    }
+    return size;
 }
 
 template<typename ElementType, typename CounterType, size_t maxcount>
