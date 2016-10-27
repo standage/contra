@@ -11,12 +11,6 @@ namespace contra_cpp
 {
 
 template<typename ElementType, typename CounterType, size_t maxcount>
-filter<ElementType, CounterType, maxcount>::filter()
-{
-
-}
-
-template<typename ElementType, typename CounterType, size_t maxcount>
 filter<ElementType, CounterType, maxcount>::filter(std::vector<size_t> array_sizes)
         : _cells_occupied(array_sizes.size(), 0),
           _arrays(array_sizes.size(), std::vector<CounterType>())
@@ -28,8 +22,15 @@ filter<ElementType, CounterType, maxcount>::filter(std::vector<size_t> array_siz
 }
 
 template<typename ElementType, typename CounterType, size_t maxcount>
+filter<ElementType, CounterType, maxcount>::filter()
+{
+    // Default constructor, for convenience at the Cython/Python interface only.
+}
+
+template<typename ElementType, typename CounterType, size_t maxcount>
 void filter<ElementType, CounterType, maxcount>::init(std::vector<size_t> array_sizes)
 {
+    // If default constructor is used, init must be called subsequently.
     _cells_occupied.resize(array_sizes.size(), 0);
     _arrays.resize(array_sizes.size(), std::vector<CounterType>());
     for (size_t i = 0; i < array_sizes.size(); i++) {

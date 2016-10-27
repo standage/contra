@@ -164,9 +164,9 @@ cdef class CountFilter:
     def __cinit__(self, list array_sizes):
         cdef vector[size_t] as = array_sizes
         self.cf.init(as)
-    def add(self, uint8_t value):
+    def add(self, uint64_t value):
         self.cf.add(value)
-    def get(self, uint8_t value):
+    def get(self, uint64_t value):
         return self.cf.get(value)
     def estimate_fpr(self):
         return self.cf.estimate_fpr()
@@ -180,9 +180,9 @@ cdef class BigCountFilter:
     def __cinit__(self, list array_sizes):
         cdef vector[size_t] as = array_sizes
         self.bcf.init(as)
-    def add(self, uint32_t value):
+    def add(self, uint64_t value):
         self.bcf.add(value)
-    def get(self, uint32_t value):
+    def get(self, uint64_t value):
         return self.bcf.get(value)
     def estimate_fpr(self):
         return self.bcf.estimate_fpr()
