@@ -10,7 +10,7 @@ from contra import BloomFilter, CountFilter, BigCountFilter
 import sys
 
 
-def test_basic():
+def test_filter_basic():
     """
     Test basic essentials: contruct, add, get
     """
@@ -34,3 +34,14 @@ def test_basic():
     for i in range(1024):
         bcf.add(101)
     assert bcf.get(101) == 1025
+
+def test_filter_size():
+    bf = BloomFilter([47, 43])
+    assert len(bf) == 47 + 43
+    bf.add(101)
+    assert len(bf) == 47 + 43
+
+    cf = CountFilter([997, 991])
+    assert len(cf) == 997 + 991
+    cf.add(101)
+    assert len(cf) == 997 + 991
