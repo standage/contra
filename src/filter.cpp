@@ -59,23 +59,16 @@ CounterType filter<ElementType, CounterType, maxcount>::get(ElementType element)
     for (auto array : _arrays) {
         size_t index = element % array.size();
         CounterType count = array[index];
+        if (maxcount == 1 && count == 0) {
+            // Optimize Bloom filter
+            // No need to check other arrays if any of them contain a 0
+            return 0;
+        }
         if (count < mincount) {
             mincount = count;
         }
     }
     return mincount;
-}
-
-template<typename ElementType>
-bool bloomfilter<ElementType>::get(ElementType element)
-{
-    for (auto array : this->_arrays) {
-        size_t index = element % array.size();
-        if (array[index] == false) {
-            return false;
-        }
-    }
-    return true;
 }
 
 template<typename ElementType, typename CounterType, size_t maxcount>
