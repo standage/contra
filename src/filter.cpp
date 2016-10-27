@@ -5,10 +5,53 @@
 // licensed under the MIT license: see LICENSE.txt.
 // -----------------------------------------------------------------------------
 
+#include <assert.h>
+#include <cmath>
 #include "filter.hpp"
 
 namespace contra_cpp
 {
+
+static inline bool isprime(size_t n)
+{
+    assert(n >= 0);
+    if (n == 1) {
+        return false;
+    }
+    else if (n == 2) {
+        return true;
+    }
+    else if (n % 2 == 0) {
+        return true;
+    }
+    for (int i = 3; i < pow(n, 0.5) + 1; i += 2) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+static inline std::vector<size_t> get_primes(size_t target, size_t n)
+{
+    std::vector<size_t> primes;
+    if (target == 1 && n == 1) {
+        primes.push_back(1);
+        return primes;
+    }
+    int i = target - 1;
+    if (i % 2 == 0) {
+        i--;
+    }
+    while (primes.size() < n && i > 0) {
+        if (isprime(i)) {
+            primes.push_back(i);
+        }
+        i -= 2;
+    }
+    assert(primes.size() == n);
+    return primes;
+}
 
 template<typename ElementType, typename CounterType, size_t maxcount>
 filter<ElementType, CounterType, maxcount>::filter(std::vector<size_t> array_sizes)
@@ -33,6 +76,19 @@ void filter<ElementType, CounterType, maxcount>::init(std::vector<size_t> array_
     // If default constructor is used, init must be called subsequently.
     _cells_occupied.resize(array_sizes.size(), 0);
     _arrays.resize(array_sizes.size(), std::vector<CounterType>());
+    for (size_t i = 0; i < array_sizes.size(); i++) {
+        size_t size = array_sizes[i];
+        _arrays[i].resize(size, 0);
+    }
+}
+
+template<typename ElementType, typename CounterType, size_t maxcount>
+filter<ElementType, CounterType, maxcount>::filter(size_t total_size, size_t num_arrays)
+        : _cells_occupied(num_arrays, 0),
+          _arrays(num_arrays, std::vector<CounterType>())
+{
+    size_t target_table_size = total_size / num_arrays;
+    std::vector<size_t> array_sizes = get_primes(target_table_size, num_arrays);
     for (size_t i = 0; i < array_sizes.size(); i++) {
         size_t size = array_sizes[i];
         _arrays[i].resize(size, 0);

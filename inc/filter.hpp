@@ -21,6 +21,7 @@ class filter
     public:
         filter();
         explicit filter(std::vector<size_t> array_sizes);
+        explicit filter(size_t total_size, size_t num_tables = 4);
         void init(std::vector<size_t> array_sizes);
         void add(ElementType element);
         CounterType get(ElementType element);
