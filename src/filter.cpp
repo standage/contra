@@ -116,8 +116,7 @@ CounterType filter<ElementType, CounterType, maxcount>::get(ElementType element)
     for (auto array : _arrays) {
         size_t index = element % array.size();
         CounterType count = array[index];
-        if (maxcount == 1 && count == 0) {
-            // Optimize Bloom filter
+        if (count == 0) {
             // No need to check other arrays if any of them contain a 0
             return 0;
         }
