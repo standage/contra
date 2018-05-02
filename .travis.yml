@@ -3,16 +3,19 @@ language: python
 os: linux
 sudo: required
 dist: trusty
+branches:
+  only:  # don't build "pushes" except on the master branch
+    - master
 python:
     - 2.7
-    - 3.4
     - 3.5
+    - 3.6
 matrix:
     include:
         - os: osx
           language: generic
           osx_image: xcode7.3
-          python: 2.7
+          python: 3.6
           install: pip install pytest
           script: make test
 install:
