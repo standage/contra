@@ -1,6 +1,6 @@
 obj/*.o
 build/
-contra.cpp
+pyx/*.cpp
 .cache/
 test/__pycache__/
 *.so
@@ -15,4 +15,7 @@ __pycache__/
 aux/contra.pc
 aux/example
 *.pyc
+env/
 libtest.txt
+.pytest_cache/
+contra.cpp

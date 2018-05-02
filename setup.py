@@ -12,10 +12,12 @@ import versioneer
 import glob
 
 headers = list(glob.glob('inc/*.hpp'))
+sources = list(glob.glob('src/*.cpp'))
+cythons = ['contra.pyx']
 
 contra = Extension(
     'contra',
-    sources=['contra.pyx', 'src/bstree.cpp'],
+    sources=cythons + sources,
     include_dirs=['inc/'],
     language='c++',
     extra_compile_args=['--std=c++11', '-Wno-unused-function'],

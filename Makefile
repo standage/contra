@@ -12,7 +12,7 @@ PREFIX=/usr/local
 CXXFLAGS=-Wall -O3 --std=c++11 -Iinc/ -fPIC
 
 # Source/header files
-HEADERS=inc/node.hpp inc/bstree.hpp
+HEADERS=inc/node.hpp inc/bstree.hpp inc/filter.hpp
 
 
 # Determine package version from git commits/tags
@@ -43,13 +43,13 @@ endif
 # Python targets
 
 test: install
-	@ py.test -v test/*.py
+	@ py.test -v tst/*.py
 
 style:
-	@ pep8 test/*.py
+	@ pep8 tst/*.py
 
 install:
-	@ pip install .
+	@ pip install -e .
 
 devenv:
 	@ pip install --upgrade cython pep8 pytest
@@ -58,8 +58,8 @@ tree:
 	@ tree -I 'build|__pycache__|contra.cpp'
 
 clean:
-	@ rm -rf build/ *.egg-info/ dist/ src/*.o *.$(SHARED_EXT)* __pycache__/ \
-	  contra.cpp aux/contra.pc test/__pycache__/
+	@ rm -rf build/ *.egg-info/ dist/ src/*.o contra*.dylib contra*.so \
+	  __pycache__/ contra.cpp aux/contra.pc test/__pycache__/ libtest.txt
 
 build:
 	@ python setup.py sdist build
@@ -76,7 +76,7 @@ lib: aux/$(SONAME) aux/contra.pc
 src/%.o: src/%.cpp
 	@ $(CXX) $(CXXFLAGS) -c -o $@ $^
 
-aux/$(SONAME): src/bstree.o
+aux/$(SONAME): src/bstree.o src/filter.o
 	@ $(CXX) $(CXXFLAGS) -shared -o $@ $^
 	@ ln -sf $(SONAME) aux/libcontra.$(SHARED_EXT)
 
