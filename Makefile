@@ -49,7 +49,7 @@ style:
 	@ pep8 tst/*.py
 
 install:
-	@ pip install .
+	@ pip install -e .
 
 devenv:
 	@ pip install --upgrade cython pep8 pytest

@@ -17,3 +17,5 @@ aux/example
 *.pyc
 env/
 libtest.txt
+.pytest_cache/
+contra.cpp
