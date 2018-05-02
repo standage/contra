@@ -54,6 +54,8 @@ cdef extern from 'filter.hpp' namespace 'contra_cpp':
         size_t size()
         double estimate_fpr()
 
+    vector[size_t] get_primes(size_t target, size_t n)
+
 # Declare Python implementation
 
 cdef class BStree:
@@ -145,8 +147,9 @@ cdef class BStreeSmall:
 
 cdef class BloomFilter:
     cdef filter[uint64_t, bool, Int1] bf;
-    def __cinit__(self, list array_sizes):
-        cdef vector[size_t] as = array_sizes
+    def __cinit__(self, size_t totalmem, int numhash=4):
+        cdef size_t tablesize = totalmem * 8 / numhash
+        cdef vector[size_t] as = get_primes(tablesize, numhash)
         self.bf.init(as)
     def add(self, uint64_t value):
         self.bf.add(value)
@@ -161,8 +164,9 @@ cdef class BloomFilter:
 
 cdef class CountFilter:
     cdef filter[uint64_t, uint8_t, Int255] cf;
-    def __cinit__(self, list array_sizes):
-        cdef vector[size_t] as = array_sizes
+    def __cinit__(self, size_t totalmem, int numhash=4):
+        cdef size_t tablesize = totalmem / numhash
+        cdef vector[size_t] as = get_primes(tablesize, numhash)
         self.cf.init(as)
     def add(self, uint64_t value):
         self.cf.add(value)
@@ -177,8 +181,9 @@ cdef class CountFilter:
 
 cdef class BigCountFilter:
     cdef filter[uint64_t, uint32_t, IntBig] bcf;
-    def __cinit__(self, list array_sizes):
-        cdef vector[size_t] as = array_sizes
+    def __cinit__(self, size_t totalmem, int numhash=4):
+        cdef size_t tablesize = totalmem / 4 / numhash
+        cdef vector[size_t] as = get_primes(tablesize, numhash)
         self.bcf.init(as)
     def add(self, uint64_t value):
         self.bcf.add(value)

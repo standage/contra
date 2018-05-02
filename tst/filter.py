@@ -14,12 +14,12 @@ def test_filter_basic():
     """
     Test basic essentials: contruct, add, get
     """
-    bf = BloomFilter([47, 43])
+    bf = BloomFilter(90, 2)
     bf.add(101)
     assert bf.get(101) is True
     assert bf.get(100) is False
 
-    cf = CountFilter([57, 53])
+    cf = CountFilter(120, 2)
     cf.add(101)
     assert cf.get(101) == 1
     assert cf.get(100) == 0
@@ -27,7 +27,7 @@ def test_filter_basic():
         cf.add(101)
     assert cf.get(101) == 101
 
-    bcf = BigCountFilter([97, 91])
+    bcf = BigCountFilter(200, 2)
     bcf.add(101)
     assert bcf.get(101) == 1
     assert bcf.get(100) == 0
@@ -36,12 +36,21 @@ def test_filter_basic():
     assert bcf.get(101) == 1025
 
 def test_filter_size():
-    bf = BloomFilter([47, 43])
-    assert len(bf) == 47 + 43
+    bf = BloomFilter(90, 2)
+    # 90 bytes / 2 hash functions * 8 buckets per byte = 360 buckets per table
+    # The closest prime numbers to 360 are 359 and 353
+    assert len(bf) == 359 + 353
     bf.add(101)
-    assert len(bf) == 47 + 43
+    assert len(bf) == 359 + 353
 
-    cf = CountFilter([997, 991])
+    # 2000 bytes / 2 hash functions * 1 bucket per byte = 1000 buckets per table
+    cf = CountFilter(2000, 2)
     assert len(cf) == 997 + 991
     cf.add(101)
     assert len(cf) == 997 + 991
+
+    # 16000 bytes / 4 hash functions / 4 bytes per bucket per byte = 1000 buckets per table
+    bcf = BigCountFilter(16000)
+    assert len(bcf) == 997 + 991 + 983 + 977
+    bcf.add(101)
+    assert len(bcf) == 997 + 991 + 983 + 977

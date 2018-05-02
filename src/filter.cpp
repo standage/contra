@@ -5,6 +5,7 @@
 // licensed under the MIT license: see LICENSE.txt.
 // -----------------------------------------------------------------------------
 
+#include <iostream>
 #include <assert.h>
 #include <cmath>
 #include "filter.hpp"
@@ -32,7 +33,7 @@ static inline bool isprime(size_t n)
     return true;
 }
 
-static inline std::vector<size_t> get_primes(size_t target, size_t n)
+std::vector<size_t> get_primes(size_t target, size_t n)
 {
     std::vector<size_t> primes;
     if (target == 1 && n == 1) {
@@ -132,6 +133,7 @@ size_t filter<ElementType, CounterType, maxcount>::size()
 {
     size_t size = 0;
     for (auto array : this->_arrays) {
+        std::cerr << "Yo: " << array.size() << '\n';
         size += array.size();
     }
     return size;

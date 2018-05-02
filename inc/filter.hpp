@@ -15,6 +15,8 @@
 namespace contra_cpp
 {
 
+std::vector<size_t> get_primes(size_t target, size_t n);
+
 template<typename ElementType, typename CounterType, size_t maxcount>
 class filter
 {
