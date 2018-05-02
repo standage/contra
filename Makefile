@@ -58,8 +58,8 @@ tree:
 	@ tree -I 'build|__pycache__|contra.cpp'
 
 clean:
-	@ rm -rf build/ *.egg-info/ dist/ src/*.o *.$(SHARED_EXT)* __pycache__/ \
-	  contra.cpp aux/contra.pc test/__pycache__/ libtest.txt
+	@ rm -rf build/ *.egg-info/ dist/ src/*.o contra*.dylib contra*.so \
+	  __pycache__/ contra.cpp aux/contra.pc test/__pycache__/ libtest.txt
 
 build:
 	@ python setup.py sdist build
