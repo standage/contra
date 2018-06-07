@@ -8,6 +8,7 @@
 #include <iostream>
 #include <assert.h>
 #include <cmath>
+#include <limits>
 #include "filter.hpp"
 
 namespace contra_cpp
@@ -54,100 +55,99 @@ std::vector<size_t> get_primes(size_t target, size_t n)
     return primes;
 }
 
-template<typename ElementType, typename CounterType, size_t maxcount>
-filter<ElementType, CounterType, maxcount>::filter(std::vector<size_t> array_sizes)
-        : _cells_occupied(array_sizes.size(), 0),
-          _arrays(array_sizes.size(), std::vector<CounterType>())
+template<typename ElementType, typename CounterType>
+filter<ElementType, CounterType>::filter() : buckets_occupied(0), table(0)
 {
-    for (size_t i = 0; i < array_sizes.size(); i++) {
-        size_t size = array_sizes[i];
-        _arrays[i].resize(size, 0);
+    // Default constructor. Do not use without subsequently calling `init`.
+}
+
+template<typename ElementType, typename CounterType>
+filter<ElementType, CounterType>::filter(size_t total_size, size_t num_rows)
+        : buckets_occupied(num_rows, 0),
+          table(num_rows, std::vector<CounterType>())
+{
+    size_t target_row_size = total_size / num_rows;
+    std::vector<size_t> row_sizes = get_primes(target_row_size, num_rows);
+    for (size_t i = 0; i < row_sizes.size(); i++) {
+        size_t size = row_sizes[i];
+        table[i].resize(size, 0);
     }
 }
 
-template<typename ElementType, typename CounterType, size_t maxcount>
-filter<ElementType, CounterType, maxcount>::filter()
+template<typename ElementType, typename CounterType>
+filter<ElementType, CounterType>::filter(std::vector<size_t> row_sizes)
+        : buckets_occupied(row_sizes.size(), 0),
+          table(row_sizes.size(), std::vector<CounterType>())
 {
-    // Default constructor, for convenience at the Cython/Python interface only.
-}
-
-template<typename ElementType, typename CounterType, size_t maxcount>
-void filter<ElementType, CounterType, maxcount>::init(std::vector<size_t> array_sizes)
-{
-    // If default constructor is used, init must be called subsequently.
-    _cells_occupied.resize(array_sizes.size(), 0);
-    _arrays.resize(array_sizes.size(), std::vector<CounterType>());
-    for (size_t i = 0; i < array_sizes.size(); i++) {
-        size_t size = array_sizes[i];
-        _arrays[i].resize(size, 0);
+    for (size_t i = 0; i < row_sizes.size(); i++) {
+        size_t size = row_sizes[i];
+        table[i].resize(size, 0);
     }
 }
 
-template<typename ElementType, typename CounterType, size_t maxcount>
-filter<ElementType, CounterType, maxcount>::filter(size_t total_size, size_t num_arrays)
-        : _cells_occupied(num_arrays, 0),
-          _arrays(num_arrays, std::vector<CounterType>())
+template<typename ElementType, typename CounterType>
+void filter<ElementType, CounterType>::insert(ElementType element)
 {
-    size_t target_table_size = total_size / num_arrays;
-    std::vector<size_t> array_sizes = get_primes(target_table_size, num_arrays);
-    for (size_t i = 0; i < array_sizes.size(); i++) {
-        size_t size = array_sizes[i];
-        _arrays[i].resize(size, 0);
-    }
-}
-
-template<typename ElementType, typename CounterType, size_t maxcount>
-void filter<ElementType, CounterType, maxcount>::add(ElementType element)
-{
-    for (size_t i = 0; i < _arrays.size(); i++){
-        size_t index = element % _arrays[i].size();
-        if (_arrays[i][index] == 0) {
-            _cells_occupied[i] += 1;
+    for (size_t i = 0; i < table.size(); i++){
+        size_t index = element % table[i].size();
+        if (table[i][index] == 0) {
+            buckets_occupied[i] += 1;
         }
-        if (_arrays[i][index] < maxcount) {
-            _arrays[i][index] = _arrays[i][index] + 1;
+        if (table[i][index] < std::numeric_limits<CounterType>::max()) {
+            table[i][index] = table[i][index] + 1;
         }
     }
 }
 
-template<typename ElementType, typename CounterType, size_t maxcount>
-CounterType filter<ElementType, CounterType, maxcount>::get(ElementType element)
+template<typename ElementType, typename CounterType>
+CounterType filter<ElementType, CounterType>::query(ElementType element)
 {
-    CounterType mincount = _arrays[0][element % _arrays[0].size()];
-    for (auto array : _arrays) {
-        size_t index = element % array.size();
-        CounterType count = array[index];
+    CounterType mincount;
+    for (size_t i = 0; i < table.size(); i++) {
+        size_t index = element % table[i].size();
+        CounterType count = table[i][index];
         if (count == 0) {
-            // No need to check other arrays if any of them contain a 0
+            // No need to check other rows if any of them contain a 0
             return 0;
         }
-        if (count < mincount) {
+        if (i == 0 || count < mincount) {
             mincount = count;
         }
     }
     return mincount;
 }
 
-template<typename ElementType, typename CounterType, size_t maxcount>
-size_t filter<ElementType, CounterType, maxcount>::size()
+template<typename ElementType, typename CounterType>
+void filter<ElementType, CounterType>::init(std::vector<size_t> row_sizes)
+{
+    // If default constructor is used, init must be called subsequently.
+    buckets_occupied.resize(row_sizes.size(), 0);
+    table.resize(row_sizes.size(), std::vector<CounterType>());
+    for (size_t i = 0; i < row_sizes.size(); i++) {
+        size_t size = row_sizes[i];
+        table[i].resize(size, 0);
+    }
+}
+
+template<typename ElementType, typename CounterType>
+size_t filter<ElementType, CounterType>::size()
 {
     size_t size = 0;
-    for (auto array : this->_arrays) {
-        std::cerr << "Yo: " << array.size() << '\n';
-        size += array.size();
+    for (auto const &row : this->table) {
+        size += row.size();
     }
     return size;
 }
 
-template<typename ElementType, typename CounterType, size_t maxcount>
-double filter<ElementType, CounterType, maxcount>::estimate_fpr()
+template<typename ElementType, typename CounterType>
+double filter<ElementType, CounterType>::estimate_fpr()
 {
     // TODO!!!
     return 0.0;
 }
 
-template class filter<uint64_t, bool, 1>;
-template class filter<uint64_t, uint8_t, 255>;
-template class filter<uint64_t, uint32_t, 8589934591>;
+template class filter<uint64_t, bool>;
+template class filter<uint64_t, uint8_t>;
+template class filter<uint64_t, uint32_t>;
 
 } // namespace contra_cpp
