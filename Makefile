@@ -9,7 +9,7 @@
 PREFIX=/usr/local
 
 # Compilation configs
-CXXFLAGS=-Wall -O3 --std=c++11 -Iinc/ -fPIC
+CXXFLAGS=-Wall -O3 --std=c++11 -Iinc/ -Ithird-party/cereal-1.2.2/include/ -fPIC
 
 # Source/header files
 HEADERS=inc/node.hpp inc/bstree.hpp inc/filter.hpp
@@ -87,6 +87,7 @@ aux/contra.pc: aux/contra.pc.in
 libinstall: aux/$(SONAME) aux/contra.pc $(HEADERS)
 	mkdir -p $(PREFIX)/lib/ $(PREFIX)/lib/pkgconfig/ $(PREFIX)/include/contra/
 	cp $(HEADERS) $(PREFIX)/include/contra/
+	cp -r third-party/cereal-1.2.2/include/cereal/ $(PREFIX)/include/contra/
 	cp aux/contra.pc $(PREFIX)/lib/pkgconfig/
 	cp aux/libcontra* $(PREFIX)/lib/
 

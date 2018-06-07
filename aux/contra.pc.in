@@ -11,4 +11,4 @@ Version: @VERSION@
 
 Requires:
 Libs: -L${libdir} -L${sharedlibdir} -lcontra
-Cflags: -I${includedir}
+Cflags: -I${includedir} -I${includedir}/contra/cereal

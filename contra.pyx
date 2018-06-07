@@ -47,6 +47,8 @@ cdef extern from 'filter.hpp' namespace 'contra_cpp':
         C query(E value)
         size_t size()
         double estimate_fpr()
+        void savefile(string filename)
+        void loadfile(string filename)
 
     vector[size_t] get_primes(size_t target, size_t n)
 
@@ -151,6 +153,10 @@ cdef class BloomFilter:
         return self.bf.query(value)
     def estimate_fpr(self):
         return self.bf.estimate_fpr()
+    def save(self, str filename):
+        self.bf.savefile(filename)
+    def load(self, str filename):
+        self.bf.loadfile(filename)
     def __repr__(self):
         return '<contra.BloomFilter instance with {} buckets>'.format(len(self))
     def __len__(self):
@@ -168,6 +174,10 @@ cdef class CountFilter:
         return self.cf.query(value)
     def estimate_fpr(self):
         return self.cf.estimate_fpr()
+    def save(self, str filename):
+        self.cf.savefile(filename)
+    def load(self, str filename):
+        self.cf.loadfile(filename)
     def __repr__(self):
         return '<contra.CountFilter instance with {} buckets>'.format(len(self))
     def __len__(self):
@@ -185,6 +195,10 @@ cdef class BigCountFilter:
         return self.bcf.query(value)
     def estimate_fpr(self):
         return self.bcf.estimate_fpr()
+    def save(self, str filename):
+        self.bcf.savefile(filename)
+    def load(self, str filename):
+        self.bcf.loadfile(filename)
     def __repr__(self):
         return '<contra.BigCountFilter instance with {} buckets>'.format(len(self))
     def __len__(self):
