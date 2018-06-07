@@ -9,7 +9,10 @@
 #include <assert.h>
 #include <cmath>
 #include <limits>
+#include <fstream>
 #include "filter.hpp"
+#include "cereal/archives/binary.hpp"
+#include "cereal/types/vector.hpp"
 
 namespace contra_cpp
 {
@@ -144,6 +147,22 @@ double filter<ElementType, CounterType>::estimate_fpr()
 {
     // TODO!!!
     return 0.0;
+}
+
+template<typename ElementType, typename CounterType>
+void filter<ElementType, CounterType>::savefile(std::string& filename)
+{
+    std::ofstream os(filename, std::ios::binary);
+    cereal::BinaryOutputArchive archive(os);
+    archive(*this);
+}
+
+template<typename ElementType, typename CounterType>
+void filter<ElementType, CounterType>::loadfile(std::string& filename)
+{
+    std::ifstream is(filename, std::ios::binary);
+    cereal::BinaryInputArchive archive(is);
+    archive(*this);
 }
 
 template class filter<uint64_t, bool>;

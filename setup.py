@@ -18,7 +18,7 @@ cythons = ['contra.pyx']
 contra = Extension(
     'contra',
     sources=cythons + sources,
-    include_dirs=['inc/'],
+    include_dirs=['inc/', 'third-party/cereal-1.2.2/include/'],
     language='c++',
     extra_compile_args=['--std=c++11', '-Wno-unused-function'],
     extra_link_args=['--std=c++11'],

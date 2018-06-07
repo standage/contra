@@ -71,6 +71,18 @@ class filter
         void init(std::vector<size_t> row_sizes);  // (re-)initialize the table
         size_t size();                             // total number of buckets/counters in the table
         double estimate_fpr();                     // estimate the table's current false positive rate
+        void savefile(std::string& filename);      // save to a file
+        void loadfile(std::string& filename);      // load from a file
+
+        template<class Archive>
+        inline void load(Archive & ar) {
+            ar(buckets_occupied, table);
+        }
+
+        template<class Archive>
+        inline void save(Archive &ar) const {
+            ar(buckets_occupied, table);
+        }
 
     protected:
         std::vector<size_t> buckets_occupied;
