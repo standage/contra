@@ -14,12 +14,6 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libc.stdint cimport int32_t, uint32_t, uint64_t, uint8_t
 
-# Cython doesn't support integer template instantiation directly
-# See https://groups.google.com/forum/#!topic/cython-users/xAZxdCFw6Xs
-cdef extern from *:
-    ctypedef int Int1 "1"
-    ctypedef int Int255 "255"
-    ctypedef int IntBig "8589934591"
 
 cdef extern from "<iostream>" namespace "std":
     cdef cppclass ostream:
@@ -45,12 +39,12 @@ cdef extern from 'bstree.hpp' namespace 'contra_cpp':
         unsigned int size()
 
 cdef extern from 'filter.hpp' namespace 'contra_cpp':
-    cdef cppclass filter[E, C, M]:
+    cdef cppclass filter[E, C]:
         filter() except +
         filter(vector[size_t] array_sizes) except +
         void init(vector[size_t] array_sizes)
-        void add(E value)
-        C get(E value)
+        void insert(E value)
+        C query(E value)
         size_t size()
         double estimate_fpr()
 
@@ -146,15 +140,15 @@ cdef class BStreeSmall:
         return self.tree.size()
 
 cdef class BloomFilter:
-    cdef filter[uint64_t, bool, Int1] bf;
+    cdef filter[uint64_t, bool] bf;
     def __cinit__(self, size_t totalmem, int numhash=4):
         cdef size_t tablesize = totalmem * 8 / numhash
         cdef vector[size_t] as = get_primes(tablesize, numhash)
         self.bf.init(as)
-    def add(self, uint64_t value):
-        self.bf.add(value)
-    def get(self, uint64_t value):
-        return self.bf.get(value)
+    def insert(self, uint64_t value):
+        self.bf.insert(value)
+    def query(self, uint64_t value):
+        return self.bf.query(value)
     def estimate_fpr(self):
         return self.bf.estimate_fpr()
     def __repr__(self):
@@ -163,15 +157,15 @@ cdef class BloomFilter:
         return self.bf.size()
 
 cdef class CountFilter:
-    cdef filter[uint64_t, uint8_t, Int255] cf;
+    cdef filter[uint64_t, uint8_t] cf;
     def __cinit__(self, size_t totalmem, int numhash=4):
         cdef size_t tablesize = totalmem / numhash
         cdef vector[size_t] as = get_primes(tablesize, numhash)
         self.cf.init(as)
-    def add(self, uint64_t value):
-        self.cf.add(value)
-    def get(self, uint64_t value):
-        return self.cf.get(value)
+    def insert(self, uint64_t value):
+        self.cf.insert(value)
+    def query(self, uint64_t value):
+        return self.cf.query(value)
     def estimate_fpr(self):
         return self.cf.estimate_fpr()
     def __repr__(self):
@@ -180,15 +174,15 @@ cdef class CountFilter:
         return self.cf.size()
 
 cdef class BigCountFilter:
-    cdef filter[uint64_t, uint32_t, IntBig] bcf;
+    cdef filter[uint64_t, uint32_t] bcf;
     def __cinit__(self, size_t totalmem, int numhash=4):
         cdef size_t tablesize = totalmem / 4 / numhash
         cdef vector[size_t] as = get_primes(tablesize, numhash)
         self.bcf.init(as)
-    def add(self, uint64_t value):
-        self.bcf.add(value)
-    def get(self, uint64_t value):
-        return self.bcf.get(value)
+    def insert(self, uint64_t value):
+        self.bcf.insert(value)
+    def query(self, uint64_t value):
+        return self.bcf.query(value)
     def estimate_fpr(self):
         return self.bcf.estimate_fpr()
     def __repr__(self):

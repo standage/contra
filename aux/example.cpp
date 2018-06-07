@@ -14,9 +14,8 @@ int main()
     }
     tree.inorder();
 
-    std::vector<size_t> array_sizes = {97, 91};
-    filter<uint64_t, uint8_t, 255> cf(array_sizes);
-    cf.add(5);
+    CountFilter cf(100, 2);
+    cf.insert(5);
 
     return 0;
 }
